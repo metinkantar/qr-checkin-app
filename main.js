@@ -1,5 +1,16 @@
 function onScanSuccess(decodedText, decodedResult) {
-    document.getElementById('result').innerText = `Katılım Kaydı: ${decodedText}`;
+    let eventName = decodedText;
+
+    try {
+        const parsed = JSON.parse(decodedText);
+        if (parsed.event) {
+            eventName = parsed.event;
+        }
+    } catch (e) {
+        // JSON değilse olduğu gibi kullan
+    }
+
+    document.getElementById('result').innerText = `Katılım Kaydı: ${eventName}`;
 
     // Google Sheets'e veri gönder
     fetch('https://script.google.com/macros/s/AKfycbzvQoH1iKvozwpddeTwj0h2WnzsXT-IdC6ouCuxEmzkUGIRuS8Sw5o7f7qJL_9sT6w/exec', {
